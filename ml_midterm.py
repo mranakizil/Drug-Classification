@@ -1,23 +1,23 @@
-import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-import os
+from sklearn.naive_bayes import CategoricalNB
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import classification_report
 from sklearn.model_selection import train_test_split
-from sklearn.feature_extraction.text import CountVectorizer
-from imblearn.over_sampling import SMOTE
 from sklearn.neighbors import KNeighborsClassifier
-from sklearn.metrics import accuracy_score
 from sklearn.naive_bayes import CategoricalNB
+from collections import Counter
+from imblearn.over_sampling import RandomOverSampler
+from imblearn.over_sampling import SMOTE
+from sklearn.metrics import accuracy_score
+from sklearn.naive_bayes import GaussianNB
 
 
 class DrugClassification:
   def __init__(self, df_drug):
     self.df_drug = df_drug
-
 
 
 def explore_categorical_variables(self):
@@ -112,44 +112,66 @@ def split_dataset(self):
 def feature_engineering(X_train, X_test):
     X_train = pd.get_dummies(X_train)
     X_test = pd.get_dummies(X_test)
-    print(X_train.head())
-    print(X_test.head())
+    return X_train, X_test
 
-#  oversampling is carried out to avoid overfitting
+def random_over_sampler(X_train, y_train):
+    # Randomly over sample the minority class
+    ros = RandomOverSampler(random_state=42)
+    X_train, y_train= ros.fit_resample(X_train, y_train)
+    return X_train, y_train
+
 def smote(X_train, y_train):
-    vectorizer = CountVectorizer()
-    vectorizer.fit(X_train.values.ravel())
-    X_train=vectorizer.transform(X_train.values.ravel())
-    y_train=vectorizer.transform(y_train.values.ravel())
-    X_train=X_train.toarray()
-    y_train=y_train.toarray()
-    X_train = pd.DataFrame(X_train)
-    X_train, y_train = SMOTE.fit_resample(X_train, y_train)
-    
-   
+    X_train, y_train = SMOTE().fit_resample(X_train, y_train)
+    return X_train, y_train
+
+def check_number_of_methods(self, y_train):
+    # Check the number of records after over sampling
+    print(sorted(Counter(y_train).items()))
+    sns.set_theme(style="darkgrid")
+    sns.countplot(y=y_train, data=self.df_drug, palette="mako_r")
+    plt.ylabel('Drug Type')
+    plt.xlabel('Total')
+    plt.show()
+
+
 def knn(X_train, X_test, y_train, y_test):
-    
     KNclassifier = KNeighborsClassifier(n_neighbors=20)
     KNclassifier.fit(X_train, y_train)
+
     y_pred = KNclassifier.predict(X_test)
 
     print(classification_report(y_test, y_pred))
     print(confusion_matrix(y_test, y_pred))
+
+    
     KNAcc = accuracy_score(y_pred,y_test)
     print('K Neighbours accuracy is: {:.2f}%'.format(KNAcc*100))
 
-def naive_bayes(X_test, y_test, X_train, y_train):
+
+def categorical_naive_bayes(X_train, X_test, y_train, y_test):
     NBclassifier1 = CategoricalNB()
     NBclassifier1.fit(X_train, y_train)
-
     y_pred = NBclassifier1.predict(X_test)
 
     print(classification_report(y_test, y_pred))
     print(confusion_matrix(y_test, y_pred))
 
-    from sklearn.metrics import accuracy_score
-    NBAcc1 = accuracy_score(y_pred, y_test)
+    NBAcc1 = accuracy_score(y_pred,y_test)
     print('Naive Bayes accuracy is: {:.2f}%'.format(NBAcc1*100))
+
+def gaussian_naive_bayes(X_train, X_test, y_train, y_test):
+    NBclassifier2 = GaussianNB()
+    NBclassifier2.fit(X_train, y_train)
+
+    y_pred = NBclassifier2.predict(X_test)
+
+    print(classification_report(y_test, y_pred))
+    print(confusion_matrix(y_test, y_pred))
+
+    from sklearn.metrics import accuracy_score
+    NBAcc2 = accuracy_score(y_pred,y_test)
+    print('Gaussian Naive Bayes accuracy is: {:.2f}%'.format(NBAcc2*100))
+
     
 def main():
     df_drug = pd.read_csv("drug200.csv")
@@ -164,13 +186,17 @@ def main():
     exploratory_data_analysis(dc)
     data_bining(dc)
     X_train, X_test, y_train, y_test = split_dataset(dc)
-    feature_engineering(X_train, X_test)
-
-
-    # these do not work
-    # smote(X_train, y_train)
-    #knn(X_train, X_test, y_train, y_test)
-    # naive_bayes( X_train, X_test, y_train, y_test)
+    X_train, X_test = feature_engineering(X_train, X_test)
+    # X_train, y_train = random_over_sampler(X_train, y_train)
+    X_train, y_train = smote(X_train, y_train)
+    check_number_of_methods(dc, y_train)
+    
+    print("---------------------k-NN---------------------")
+    knn(X_train, X_test, y_train, y_test)
+    print("---------------------categorical naive bayes---------------------")
+    categorical_naive_bayes(X_train, X_test, y_train, y_test)
+    print("---------------------gaussian naive bayes---------------------")
+    gaussian_naive_bayes(X_train, X_test, y_train, y_test)
 
     
 
