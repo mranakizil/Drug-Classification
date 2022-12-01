@@ -14,7 +14,6 @@ def main():
     dataset.explore_categorical_variables()
     dataset.explore_numerical_variables()
     dataset.exploratory_data_analysis()
-
     dataset.data_bining()
     X_train, X_test, y_train, y_test = dataset.split_dataset()
     X_train, X_test = dataset.feature_engineering(X_train, X_test)

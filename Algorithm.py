@@ -20,7 +20,7 @@ class Algorithm:
         self.knn_acc = 0
         self.categorical_nb_acc = 0
         self.gaussian_nb_acc = 0
-
+    
 
     def knn(self):
         KNclassifier = KNeighborsClassifier(n_neighbors=20)
@@ -31,34 +31,32 @@ class Algorithm:
         print(classification_report(self.y_test, y_pred))
         print(confusion_matrix(self.y_test, y_pred))
         
-        KNAcc = accuracy_score(y_pred, self.y_test)
-        print('K Neighbours accuracy is: {:.2f}%'.format(KNAcc*100))
-
+        self.knn_acc = accuracy_score(y_pred, self.y_test)
+        print('K Neighbours accuracy is: {:.2f}%'.format(self.knn_acc*100))
+     
 
     def categorical_naive_bayes(self):
-        NBclassifier1 = CategoricalNB()
-        NBclassifier1.fit(self.X_train, self.y_train)
-        y_pred = NBclassifier1.predict(self.X_test)
+        NBclassifier = CategoricalNB()
+        NBclassifier.fit(self.X_train, self.y_train)
+        y_pred = NBclassifier.predict(self.X_test)
 
         print(classification_report(self.y_test, y_pred))
         print(confusion_matrix(self.y_test, y_pred))
 
-        NBAcc1 = accuracy_score(y_pred, self.y_test)
-        print('Naive Bayes accuracy is: {:.2f}%'.format(NBAcc1*100))
-
+        self.categorical_nb_acc = accuracy_score(y_pred, self.y_test)
+        print('Naive Bayes accuracy is: {:.2f}%'.format(self.categorical_nb_acc*100))
+     
     
     def gaussian_naive_bayes(self):
-        NBclassifier2 = GaussianNB()
-        NBclassifier2.fit(self.X_train, self.y_train)
+        NBclassifier = GaussianNB()
+        NBclassifier.fit(self.X_train, self.y_train)
 
-        y_pred = NBclassifier2.predict(self.X_test)
+        y_pred = NBclassifier.predict(self.X_test)
 
         print(classification_report(self.y_test, y_pred))
         print(confusion_matrix(self.y_test, y_pred))
 
-        NBAcc2 = accuracy_score(y_pred, self.y_test)
-        print('Gaussian Naive Bayes accuracy is: {:.2f}%'.format(NBAcc2*100))
-
-
-   
+        self.gaussian_nb_acc = accuracy_score(y_pred, self.y_test)
+        print('Gaussian Naive Bayes accuracy is: {:.2f}%'.format(self.gaussian_nb_acc*100))
+       
   

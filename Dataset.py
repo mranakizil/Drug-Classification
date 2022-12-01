@@ -47,34 +47,34 @@ class Dataset:
     def exploratory_data_analysis(self):
         # drug type distribution
         sns.set_theme(style="darkgrid")
-        sns.countplot(y = "Drug", data = self.df_drug, palette = "flare")
+        sns.countplot(y = "Drug", data = self.df_drug, palette = "icefire")
         plt.ylabel('Drug Type')
         plt.xlabel('Total')
         plt.show()
 
         # gender distribution
         sns.set_theme(style="darkgrid")
-        sns.countplot(x = "Sex", data = self.df_drug, palette = "rocket")
+        sns.countplot(x = "Sex", data = self.df_drug, palette = "coolwarm")
         plt.xlabel('Gender (F=Female, M=Male)')
         plt.ylabel('Total')
         plt.show()
 
         # blood pressure distribution
         sns.set_theme(style="darkgrid")
-        sns.countplot(y="BP", data = self.df_drug, palette="crest")
+        sns.countplot(y="BP", data = self.df_drug, palette="vlag")
         plt.ylabel('Blood Pressure')
         plt.xlabel('Total')
         plt.show()
 
         # cholesterol distribution
         sns.set_theme(style="darkgrid")
-        sns.countplot(x = "Cholesterol", data = self.df_drug, palette = "magma")
+        sns.countplot(x = "Cholesterol", data = self.df_drug, palette = "crest")
         plt.xlabel('Blood Pressure')
         plt.ylabel('Total')
         plt.show()
 
         # gender distribution based on drug type
-        pd.crosstab(self.df_drug.Sex, self.df_drug.Drug).plot(kind="bar",figsize=(12,5),color=['#003f5c','#ffa600','#58508d','#bc5090','#ff6361'])
+        pd.crosstab(self.df_drug.Sex, self.df_drug.Drug).plot(kind="bar",figsize=(12,5), color=['#9BC2B2','#C5D6BA','#F2E9D3','#F6C8B6','#CA9CAC'])
         plt.title('Gender distribution based on Drug type')
         plt.xlabel('Gender')
         plt.xticks(rotation = 0)
@@ -82,7 +82,7 @@ class Dataset:
         plt.show()
 
         # blood pressure distribution based on cholesterol
-        pd.crosstab(self.df_drug.BP, self.df_drug.Cholesterol).plot(kind="bar",figsize=(15,6),color=['#6929c4','#1192e8'])
+        pd.crosstab(self.df_drug.BP, self.df_drug.Cholesterol).plot(kind="bar",figsize=(15,6), color=['#FFCBB5','#F28589'])
         plt.title('Blood Pressure distribution based on Cholesterol')
         plt.xlabel('Blood Pressure')
         plt.xticks(rotation=0)
@@ -90,8 +90,8 @@ class Dataset:
         plt.show()
 
         # sodium to potassium distribution based on gender and age
-        plt.scatter(x = self.df_drug.Age[self.df_drug.Sex=='F'], y = self.df_drug.Na_to_K[(self.df_drug.Sex=='F')], c="Blue")
-        plt.scatter(x = self.df_drug.Age[self.df_drug.Sex=='M'], y = self.df_drug.Na_to_K[(self.df_drug.Sex=='M')], c="Orange")
+        plt.scatter(x = self.df_drug.Age[self.df_drug.Sex=='F'], y = self.df_drug.Na_to_K[(self.df_drug.Sex=='F')], c="Green")
+        plt.scatter(x = self.df_drug.Age[self.df_drug.Sex=='M'], y = self.df_drug.Na_to_K[(self.df_drug.Sex=='M')], c="Blue")
         plt.legend(["Female", "Male"])
         plt.xlabel("Age")
         plt.ylabel("Na_to_K")
@@ -119,7 +119,7 @@ class Dataset:
         # Check the number of records after oversampling
         print(sorted(Counter(y_train).items()))
         sns.set_theme(style="darkgrid")
-        sns.countplot(y=y_train, data = self.df_drug, palette="mako_r")
+        sns.countplot(y=y_train, data = self.df_drug, palette="cubehelix")
         plt.ylabel('Drug Type')
         plt.xlabel('Total')
         plt.show()
