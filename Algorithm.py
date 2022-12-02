@@ -1,3 +1,9 @@
+"""
+CSE4088 Introduction to Machine Learning - Project Part #2
+Merve Rana Kızıl - 150119825
+Elif Gülay - 150119732
+Sueda Bilen - 150117044
+"""
 
 from sklearn.naive_bayes import CategoricalNB
 from sklearn.neighbors import KNeighborsClassifier
@@ -24,12 +30,9 @@ class Algorithm:
     def knn(self):
         KNclassifier = KNeighborsClassifier(n_neighbors=20)
         KNclassifier.fit(self.X_train, self.y_train)
-
         y_pred = KNclassifier.predict(self.X_test)
-
+        print()
         print(classification_report(self.y_test, y_pred))
-        print(confusion_matrix(self.y_test, y_pred))
-        
         self.knn_acc = accuracy_score(y_pred, self.y_test)
         print('K Neighbours accuracy is: {:.2f}%'.format(self.knn_acc*100))
      
@@ -38,10 +41,8 @@ class Algorithm:
         NBclassifier = CategoricalNB()
         NBclassifier.fit(self.X_train, self.y_train)
         y_pred = NBclassifier.predict(self.X_test)
-
+        print()
         print(classification_report(self.y_test, y_pred))
-        print(confusion_matrix(self.y_test, y_pred))
-
         self.nb_acc = accuracy_score(y_pred, self.y_test)
         print('Naive Bayes accuracy is: {:.2f}%'.format(self.nb_acc*100))
        

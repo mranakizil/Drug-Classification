@@ -1,3 +1,10 @@
+"""
+CSE4088 Introduction to Machine Learning - Project Part #2
+Merve Rana Kızıl - 150119825
+Elif Gülay - 150119732
+Sueda Bilen - 150117044
+"""
+
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -17,7 +24,7 @@ class Dataset:
         self.df_drug['Age_binned'] = pd.cut(self.df_drug['Age'], bins=bin_age, labels=category_age)
         self.df_drug = self.df_drug.drop(['Age'], axis = 1)
 
-        # divede chemical ratio into 4 categories
+        # divide chemical ratio into 4 categories
         bin_NatoK = [0, 9, 19, 29, 50]
         category_NatoK = ['<10', '10-20', '20-30', '>30']
         self.df_drug['Na_to_K_binned'] = pd.cut(self.df_drug['Na_to_K'], bins=bin_NatoK, labels=category_NatoK)
@@ -30,8 +37,7 @@ class Dataset:
         print(self.df_drug.BP.value_counts())
         print(self.df_drug.Cholesterol.value_counts())
 
-
-    
+ 
     def explore_numerical_variables(self):
         skewAge = self.df_drug.Age.skew(axis = 0, skipna = True)
         print('Age skewness: ', skewAge)
