@@ -5,7 +5,8 @@ from Algorithm import *
 
 def main():
     df_drug = pd.read_csv("drug200.csv")
-    df_drug.head()
+    print()
+    print(df_drug.head())
     # check null in dataset
     print(df_drug.info())
 
@@ -17,6 +18,9 @@ def main():
     dataset.data_bining()
     X_train, X_test, y_train, y_test = dataset.split_dataset()
     X_train, X_test = dataset.feature_engineering(X_train, X_test)
+    print()
+    print(X_train.head())
+    dataset.check_number_of_methods(y_train)
     X_train, y_train = dataset.smote(X_train, y_train)
     dataset.check_number_of_methods(y_train)
 
@@ -24,8 +28,7 @@ def main():
     y = df_drug["Drug"]
     algorithm = Algorithm(X_train, X_test, y_train, y_test)
     algorithm.knn()
-    algorithm.categorical_naive_bayes()
-    algorithm.gaussian_naive_bayes()
+    algorithm.naive_bayes()
     
 
 if __name__ == "__main__":

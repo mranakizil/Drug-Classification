@@ -18,8 +18,7 @@ class Algorithm:
         self.X_train, self.X_test, self.y_train, self.y_test = X_train, X_test, y_train, y_test
         # accuracies of each algorithm
         self.knn_acc = 0
-        self.categorical_nb_acc = 0
-        self.gaussian_nb_acc = 0
+        self.nb_acc = 0
     
 
     def knn(self):
@@ -35,7 +34,7 @@ class Algorithm:
         print('K Neighbours accuracy is: {:.2f}%'.format(self.knn_acc*100))
      
 
-    def categorical_naive_bayes(self):
+    def naive_bayes(self):
         NBclassifier = CategoricalNB()
         NBclassifier.fit(self.X_train, self.y_train)
         y_pred = NBclassifier.predict(self.X_test)
@@ -43,20 +42,7 @@ class Algorithm:
         print(classification_report(self.y_test, y_pred))
         print(confusion_matrix(self.y_test, y_pred))
 
-        self.categorical_nb_acc = accuracy_score(y_pred, self.y_test)
-        print('Naive Bayes accuracy is: {:.2f}%'.format(self.categorical_nb_acc*100))
-     
-    
-    def gaussian_naive_bayes(self):
-        NBclassifier = GaussianNB()
-        NBclassifier.fit(self.X_train, self.y_train)
-
-        y_pred = NBclassifier.predict(self.X_test)
-
-        print(classification_report(self.y_test, y_pred))
-        print(confusion_matrix(self.y_test, y_pred))
-
-        self.gaussian_nb_acc = accuracy_score(y_pred, self.y_test)
-        print('Gaussian Naive Bayes accuracy is: {:.2f}%'.format(self.gaussian_nb_acc*100))
+        self.nb_acc = accuracy_score(y_pred, self.y_test)
+        print('Naive Bayes accuracy is: {:.2f}%'.format(self.nb_acc*100))
        
   
