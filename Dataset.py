@@ -103,6 +103,7 @@ class Dataset:
         plt.ylabel("Na_to_K")
         plt.show()
 
+
     def split_dataset(self):
         X = self.df_drug.drop(["Drug"], axis=1)
         y = self.df_drug["Drug"]

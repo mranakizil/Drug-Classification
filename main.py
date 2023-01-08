@@ -31,14 +31,26 @@ def main():
     X_train, y_train = dataset.smote(X_train, y_train)
     dataset.check_number_of_methods(y_train)
 
-    X = df_drug.drop(["Drug"], axis=1)
-    y = df_drug["Drug"]
+
     algorithm = Algorithm(X_train, X_test, y_train, y_test)
     print("-----------------------k-NN-----------------------")
     algorithm.knn()
     print("-----------------------Naive Bayes-----------------------")
     algorithm.naive_bayes()
+    print("-----------------------Random Forest-----------------------")
+    algorithm.random_forest()
+    print("-----------------------Support Vector Machines-----------------------")
+    algorithm.SVM()
+    print("-----------------------Decision Tree-----------------------")
+    algorithm.decision_tree()
+
+    print("-----------------------COMPARISON-----------------------")
+
+    algorithm.algorithm_comparison()
+
+    dataset.correlation_matrix()
     
+
 
 if __name__ == "__main__":
     main()
