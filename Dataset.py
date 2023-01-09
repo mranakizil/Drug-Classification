@@ -18,7 +18,7 @@ class Dataset:
         self.df_drug = df_drug
 
     def data_bining(self):
-        # divided age into 7 categories
+        # divide age into 7 categories
         bin_age = [0, 19, 29, 39, 49, 59, 69, 80]
         category_age = ['<20s', '20s', '30s', '40s', '50s', '60s', '>60s']
         self.df_drug['Age_binned'] = pd.cut(self.df_drug['Age'], bins=bin_age, labels=category_age)
@@ -130,3 +130,24 @@ class Dataset:
         plt.ylabel('Drug Type')
         plt.xlabel('Total')
         plt.show()
+
+    def correlation_matrix(self):
+        # Convert the "Sex" column to a numeric data type
+        self.df_drug["Sex"] = self.df_drug["Sex"].replace({"M": 1, "F": 0})
+
+        # Convert the "BP" column to a numeric data type
+        self.df_drug["BP"] = self.df_drug["BP"].replace({"LOW": 0, "NORMAL": 1, "HIGH": 2})
+
+       
+        # Calculate the correlation matrix
+        corr_matrix = self.df_drug.corr(numeric_only=True)
+
+        print("hereee")
+        # Plot the correlation matrix as a heatmap
+        sns.heatmap(corr_matrix)
+
+        # Show the plot
+        plt.show()
+
+      
+      

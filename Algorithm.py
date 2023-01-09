@@ -15,6 +15,7 @@ from sklearn.svm import SVC
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import accuracy_score
+import matplotlib.pyplot as plt
 from Dataset import *
 from Algorithm import *
 
@@ -38,7 +39,8 @@ class Algorithm:
         print(classification_report(self.y_test, y_pred))
         self.knn_acc = accuracy_score(y_pred, self.y_test)
         print('K Neighbours accuracy is: {:.2f}%'.format(self.knn_acc*100))
-     
+        self.plot_confusion_matrix(self.y_test, y_pred)
+        
 
     def naive_bayes(self):
         NBclassifier = CategoricalNB()
@@ -48,6 +50,7 @@ class Algorithm:
         print(classification_report(self.y_test, y_pred))
         self.nb_acc = accuracy_score(y_pred, self.y_test)
         print('Naive Bayes accuracy is: {:.2f}%'.format(self.nb_acc*100))
+        self.plot_confusion_matrix(self.y_test, y_pred)
     
 
     def random_forest(self):
@@ -59,6 +62,7 @@ class Algorithm:
         print(classification_report(self.y_test, y_pred))
         self.rf_acc = accuracy_score(y_pred, self.y_test)
         print('Random Forest accuracy is: {:.2f}%'.format(self.rf_acc*100))
+        self.plot_confusion_matrix(self.y_test, y_pred)
   
 
     def SVM(self):
@@ -68,6 +72,7 @@ class Algorithm:
         print(classification_report(self.y_test, y_pred))
         self.svm_acc = accuracy_score(y_pred, self.y_test)
         print('SVM accuracy is: {:.2f}%'.format(self.svm_acc*100))
+        self.plot_confusion_matrix(self.y_test, y_pred)
   
 
     def decision_tree(self):
@@ -77,9 +82,19 @@ class Algorithm:
         print(classification_report(self.y_test, y_pred))
         self.dt_acc = accuracy_score(y_pred, self.y_test)
         print('Decision Tree accuracy is: {:.2f}%'.format(self.dt_acc*100))
+        self.plot_confusion_matrix(self.y_test, y_pred)
 
     def algorithm_comparison(self):
         compare = pd.DataFrame({'Model': ['K Neighbors', 'NB', 'Random Forest', 'SVM', 'Decision Tree'], 'Accuracy': 
         [self.knn_acc*100, self.nb_acc*100, self.rf_acc*100, self.svm_acc*100, self.dt_acc*100]})
         compare.sort_values(by='Accuracy', ascending=False)
         print(compare)
+
+    def plot_confusion_matrix(self, y_test, y_pred):
+        conf_matrix = confusion_matrix(y_test, y_pred)
+        plt.imshow(conf_matrix)
+        plt.xlabel('Predicted label')
+        plt.ylabel('True label')
+        plt.colorbar()
+        plt.show()
+     
