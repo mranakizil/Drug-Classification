@@ -131,23 +131,6 @@ class Dataset:
         plt.xlabel('Total')
         plt.show()
 
-    def correlation_matrix(self):
-        # Convert the "Sex" column to a numeric data type
-        self.df_drug["Sex"] = self.df_drug["Sex"].replace({"M": 1, "F": 0})
-
-        # Convert the "BP" column to a numeric data type
-        self.df_drug["BP"] = self.df_drug["BP"].replace({"LOW": 0, "NORMAL": 1, "HIGH": 2})
-
-       
-        # Calculate the correlation matrix
-        corr_matrix = self.df_drug.corr(numeric_only=True)
-
-        print("hereee")
-        # Plot the correlation matrix as a heatmap
-        sns.heatmap(corr_matrix)
-
-        # Show the plot
-        plt.show()
 
       
       

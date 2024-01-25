@@ -56,9 +56,7 @@ class Algorithm:
     def random_forest(self):
         RFclassifier = RandomForestClassifier(max_leaf_nodes=30)
         RFclassifier.fit(self.X_train, self.y_train)
-
         y_pred = RFclassifier.predict(self.X_test)
-
         print(classification_report(self.y_test, y_pred))
         self.rf_acc = accuracy_score(y_pred, self.y_test)
         print('Random Forest accuracy is: {:.2f}%'.format(self.rf_acc*100))
@@ -73,7 +71,6 @@ class Algorithm:
         self.svm_acc = accuracy_score(y_pred, self.y_test)
         print('SVM accuracy is: {:.2f}%'.format(self.svm_acc*100))
         self.plot_confusion_matrix(self.y_test, y_pred)
-  
 
     def decision_tree(self):
         DTclassifier = DecisionTreeClassifier(max_leaf_nodes=20)
